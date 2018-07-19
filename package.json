@@ -1,0 +1,32 @@
+{
+  "name": "emotion-detector",
+  "version": "0.0.1",
+  "description": "Emotion recognition in Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidCai1993/emotion-detector.js.git"
+  },
+  "keywords": [
+    "Emotion",
+    "Recognition",
+    "Emotion Recognition"
+  ],
+  "author": "DavidCai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidCai1993/emotion-detector.js/issues"
+  },
+  "homepage": "https://github.com/DavidCai1993/emotion-detector.js#readme",
+  "devDependencies": {
+    "standard": "^11.0.1"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.12.3",
+    "@tensorflow/tfjs-node": "^0.1.9",
+    "jimp": "^0.2.28"
+  }
+}
