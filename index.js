@@ -1,11 +1,9 @@
 'use strict'
 require('@tensorflow/tfjs-node')
-const _ = require('lodash')
 const cv = require('opencv4nodejs')
 const tf = require('@tensorflow/tfjs')
 const imageUtil = require('./lib/image')
 const faceUtil = require('./lib/face')
-const util = require('./lib/util')
 
 const EMOTION_MODEL_PATH = `file://${__dirname}/models/fer2013/model.json`
 
@@ -22,26 +20,15 @@ const EMOTION_MODEL_PATH = `file://${__dirname}/models/fer2013/model.json`
 
   const faces = await faceUtil.getFaces(imageGray)
 
-  for (const face of faces.objects) {
+  for (const face of faces) {
     const x = cv.Point2(face.x, face.y)
     const y = cv.Point2(face.x + face.width, face.y + face.height)
     imageRGB.drawRectangle(x, y)
 
     let faceImage = await imageRGB.getRegion(face)
-    faceImage = await faceImage.resizeAsync(inputShape[0], inputShape[1])
-    faceImage = await faceImage.bgrToGrayAsync()
+    let tensor = await faceUtil.preprocessToTensor(faceImage, inputShape)
 
-    let tensor = tf.tensor3d(_.flattenDeep(faceImage.getDataAsArray()), [64, 64, 1])
-
-    console.log(tensor.shape)
-    tensor = tensor.asType('float32')
-    tensor = tensor.div(255.0)
-    tensor = tensor.sub(0.5)
-    tensor = tensor.mul(2.0)
-    tensor = tensor.reshape([1, 64, 64, 1])
-
-    const result = await emotionModel.predict(tensor)
-    imageRGB.putText(util.getEmotionLabel(result), x, 0, 1)
+    imageRGB.putText(await faceUtil.inferEmotion(tensor, emotionModel), x, 0, 1)
   }
 
   await cv.imwriteAsync('./test.jpg', imageRGB)
