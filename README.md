@@ -7,8 +7,7 @@ Emotion recognition in Node.js, using [TensorFlow.js](https://js.tensorflow.org/
 
 ![faces-result.jpg](http://dn-cnode.qbox.me/FtE1eFwzKZJI8OhkvgIMD5eHaERx)
 ![ronaldo-result.jpg](http://dn-cnode.qbox.me/FhndmCXXRbDPQg6z_ONA-P6zta0E)
-![angry-happy.jpg](http://dn-cnode.qbox.me/FrBGPPwcU-Bd349pi3ZFZYdtPkDD)
-
+![angry-happy.jpg](http://dn-cnode.qbox.me/FoZG8X6nI66-ER9eJhp0qEPXJHYE)
 ## Installation
 
 ```sh
