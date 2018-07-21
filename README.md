@@ -1,7 +1,7 @@
 # emotion-detector.js
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Emotion recognition in Node.js, using [TensorFlow.js](https://js.tensorflow.org/).
+Emotion recognition in Node.js, using [TensorFlow.js](https://js.tensorflow.org/) and [OpenCV](https://github.com/justadudewhohacks/opencv4nodejs).
 
 ## Some Examples
 

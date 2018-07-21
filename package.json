@@ -27,6 +27,7 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.12.3",
     "@tensorflow/tfjs-node": "^0.1.9",
+    "commander": "^2.16.0",
     "lodash": "^4.17.10",
     "opencv4nodejs": "^4.7.1"
   }
