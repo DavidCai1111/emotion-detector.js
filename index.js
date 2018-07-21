@@ -1,15 +1,20 @@
 'use strict'
 require('@tensorflow/tfjs-node')
-const tf = require('@tensorflow/tfjs')
+const cv = require('opencv4nodejs')
 const imageUtil = require('./lib/image')
+const faceUtil = require('./lib/face')
 
 ;(async function () {
-  const rgbImage = await imageUtil.loadImage('./images/faces.jpg', false)
-  const grayImage = await imageUtil.loadImage('./images/faces.jpg', true)
+  let imageRGB = await imageUtil.loadImage('./images/faces.jpg', false)
+  let imageGray = await imageUtil.loadImage('./images/faces.jpg', true)
 
-  rgbImage.print()
-  grayImage.print()
+  const faces = await faceUtil.getFaces(imageGray)
 
-  await imageUtil.saveImage('./test1.jpg', grayImage)
-  await imageUtil.saveImage('./test2.jpg', rgbImage)
+  for (const face of faces.objects) {
+    const x = cv.Point2(face.x, face.y)
+    const y = cv.Point2(face.x + face.width, face.y + face.height)
+    imageRGB.drawRectangle(x, y)
+  }
+
+  await cv.imwriteAsync('./test.jpg', imageRGB)
 })(console.error)
