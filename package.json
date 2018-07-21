@@ -1,8 +1,8 @@
 {
   "name": "emotion-detector",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Emotion recognition in Node.js",
-  "main": "index.js",
+  "main": "detect.js",
   "scripts": {
     "test": "./node_modules/.bin/standard"
   },
