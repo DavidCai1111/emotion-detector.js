@@ -1,6 +1,6 @@
 'use strict'
-const detector = require('commander')
 require('@tensorflow/tfjs-node')
+const detector = require('commander')
 const tf = require('@tensorflow/tfjs')
 const cv = require('opencv4nodejs')
 const pkg = require('./package')
@@ -20,7 +20,6 @@ detector
   .action(function (opts) {
     ;(async function () {
       let { inputImagePath, outputImagePath, color } = opts
-      console.log({ inputImagePath, outputImagePath, color })
       if (!color) color = 'black'
 
       const colorVec = imageUtil.getColorVecByString(color)
@@ -49,6 +48,42 @@ detector
       }
 
       await cv.imwriteAsync(outputImagePath, imageRGB)
+    })(console.error)
+  })
+
+detector
+  .command('info')
+  .description('only output the infomation of faces position and emotion')
+  .option('-i, --inputImagePath <path>', 'Path to the input image')
+  .action(function (opts) {
+    ;(async function () {
+      let { inputImagePath } = opts
+
+      const emotionModel = await tf.loadModel(EMOTION_MODEL_PATH)
+
+      const inputShape = [
+        emotionModel.feedInputShapes[0][1],
+        emotionModel.feedInputShapes[0][2]
+      ]
+
+      let imageRGB = await imageUtil.loadImage(inputImagePath, false)
+      let imageGray = await imageUtil.loadImage(inputImagePath, true)
+
+      const faces = await faceUtil.getFaces(imageGray)
+
+      const results = []
+
+      for (const face of faces) {
+        let faceImage = await imageRGB.getRegion(face)
+        let tensor = await faceUtil.preprocessToTensor(faceImage, inputShape)
+
+        results.push({
+          face: { x: face.x, y: face.y, height: face.height, width: face.width },
+          emotion: await faceUtil.inferEmotion(tensor, emotionModel)
+        })
+      }
+
+      console.log(results)
     })(console.error)
   })
 
