@@ -19,13 +19,13 @@ npm i emotion-detector -g
 ### Draw The Result On Given Image (Like `Examples`)
 
 ```js
-emotion-detector draw -i ./images/input.jpg -o ./output.jpg -c white
+emotion-detector-js draw -i ./images/input.jpg -o ./output.jpg -c white
 ```
 
 ### Output The Result To Terminal
 
 ```js
-emotion-detector info -i ./images/input.jpg
+emotion-detector-js info -i ./images/input.jpg
 // Output:
 // [ { face: { x: 251, y: 58, height: 82, width: 82 },
 //     emotion: 'happy' },
